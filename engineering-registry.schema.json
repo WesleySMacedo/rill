@@ -1,0 +1,45 @@
+{
+	"$schema": "https://json-schema.org/draft/2020-12/schema",
+	"type": "object",
+	"additionalProperties": false,
+	"required": ["version", "entries"],
+	"properties": {
+		"version": { "type": "string", "minLength": 1 },
+		"entries": {
+			"type": "array",
+			"minItems": 1,
+			"items": {
+				"type": "object",
+				"additionalProperties": false,
+				"required": ["action", "domain", "risk", "profile", "allowedPaths", "forbiddenPaths", "allowedExtensions", "maxChangedFiles", "approvalRequirement", "contextLimit", "validations", "domainContext", "playbook", "applicableTests"],
+				"properties": {
+					"action": { "enum": ["PLAN_CHANGE", "PATCH_UI", "VALIDATE_CHANGE"] },
+					"domain": { "const": "AuditQ" },
+					"risk": { "type": "string", "minLength": 1 },
+					"profile": { "type": "string", "minLength": 1 },
+					"modelProfile": { "enum": ["LOW_COST", "HIGH_CONFIDENCE"] },
+					"allowedPaths": { "type": "array", "minItems": 1, "items": { "type": "string", "minLength": 1 } },
+					"forbiddenPaths": { "type": "array", "items": { "type": "string", "minLength": 1 } },
+					"allowedExtensions": { "type": "array", "minItems": 1, "items": { "type": "string", "pattern": "^\\.[a-z0-9]+$" } },
+					"maxChangedFiles": { "type": "integer", "minimum": 1 },
+					"approvalRequirement": {
+						"type": "object",
+						"additionalProperties": false,
+						"required": ["required", "reason"],
+						"properties": { "required": { "type": "boolean" }, "reason": { "type": "string", "minLength": 1 } }
+					},
+					"contextLimit": {
+						"type": "object",
+						"additionalProperties": false,
+						"required": ["maxFiles", "maxTokens"],
+						"properties": { "maxFiles": { "type": "integer", "minimum": 1 }, "maxTokens": { "type": "integer", "minimum": 1 } }
+					},
+					"validations": { "type": "array", "minItems": 1, "items": { "type": "string", "minLength": 1 } },
+					"domainContext": { "type": "array", "items": { "type": "string", "minLength": 1 } },
+					"playbook": { "type": "array", "items": { "type": "string", "minLength": 1 } },
+					"applicableTests": { "type": "array", "items": { "type": "string", "minLength": 1 } }
+				}
+			}
+		}
+	}
+}

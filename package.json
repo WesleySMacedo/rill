@@ -1,0 +1,30 @@
+{
+  "name": "@rill/core",
+  "version": "0.1.0",
+  "description": "Rill - AI Mission Control Plane Framework",
+  "type": "module",
+  "main": "./src/index.ts",
+  "types": "./src/index.ts",
+  "scripts": {
+    "test": "vitest run",
+    "test:watch": "vitest",
+    "classify": "node src/classification/classify.cjs",
+    "mcp": "node src/cli/mcp-server.cjs"
+  },
+  "keywords": [
+    "ai",
+    "control-plane",
+    "mission-control",
+    "governance",
+    "hitl",
+    "agent"
+  ],
+  "author": "Wesley de Souza Macedo",
+  "license": "Apache-2.0",
+  "devDependencies": {
+    "@cloudflare/vitest-plugin": "^1.0.0",
+    "@cloudflare/workers-types": "^4.20240909.0",
+    "typescript": "^5.5.4",
+    "vitest": "~4.1.0"
+  }
+}

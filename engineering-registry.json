@@ -1,0 +1,80 @@
+{
+	"version": "1.0.0",
+	"entries": [
+		{
+			"action": "PLAN_CHANGE",
+			"domain": "AuditQ",
+			"risk": "LOW",
+			"profile": "READ_ONLY",
+			"modelProfile": "LOW_COST",
+			"allowedPaths": [
+				"public/index.html",
+				"public/app.js",
+				"public/auditq-business.css",
+				"public/auditq-business.js",
+				"public/auditq-professional.css",
+				"public/auditq-professional.js",
+				"public/auditq-official-values.js"
+			],
+			"forbiddenPaths": ["src/index.js", "src/services/mercadolivre.js", "migrations/"],
+			"allowedExtensions": [".html", ".js", ".css"],
+			"maxChangedFiles": 7,
+			"approvalRequirement": { "required": false, "reason": "Read-only planning" },
+			"contextLimit": { "maxFiles": 7, "maxTokens": 12000 },
+			"validations": ["registry", "scope", "schema"],
+			"domainContext": ["AGENTS.md", "docs/product-baseline/UI_ANALYSIS.md", "docs/product-baseline/DOMAIN_KNOWLEDGE.md"],
+			"playbook": [".github/prompts/analyze-rill.prompt.md"],
+			"applicableTests": ["tests/engineering-registry.test.js", "tests/architect.worker.test.js"]
+		},
+		{
+			"action": "PATCH_UI",
+			"domain": "AuditQ",
+			"risk": "MEDIUM",
+			"profile": "UI_PATCH",
+			"modelProfile": "LOW_COST",
+			"allowedPaths": [
+				"public/index.html",
+				"public/app.js",
+				"public/auditq-business.css",
+				"public/auditq-business.js",
+				"public/auditq-professional.css",
+				"public/auditq-professional.js",
+				"public/auditq-official-values.js"
+			],
+			"forbiddenPaths": ["src/index.js", "src/services/mercadolivre.js", "migrations/"],
+			"allowedExtensions": [".html", ".js", ".css"],
+			"maxChangedFiles": 3,
+			"approvalRequirement": { "required": true, "reason": "UI change requires explicit approval" },
+			"contextLimit": { "maxFiles": 7, "maxTokens": 12000 },
+			"validations": ["registry", "scope", "schema", "tests", "visual"],
+			"domainContext": ["AGENTS.md", "docs/product-baseline/UI_ANALYSIS.md", "docs/product-baseline/DOMAIN_KNOWLEDGE.md"],
+			"playbook": [".github/prompts/analyze-rill.prompt.md"],
+			"applicableTests": ["tests/engineering-registry.test.js", "tests/architect.worker.test.js"]
+		},
+		{
+			"action": "VALIDATE_CHANGE",
+			"domain": "AuditQ",
+			"risk": "LOW",
+			"profile": "READ_ONLY",
+			"modelProfile": "LOW_COST",
+			"allowedPaths": [
+				"public/index.html",
+				"public/app.js",
+				"public/auditq-business.css",
+				"public/auditq-business.js",
+				"public/auditq-professional.css",
+				"public/auditq-professional.js",
+				"public/auditq-official-values.js"
+			],
+			"forbiddenPaths": ["src/index.js", "src/services/mercadolivre.js", "migrations/"],
+			"allowedExtensions": [".html", ".js", ".css"],
+			"maxChangedFiles": 7,
+			"approvalRequirement": { "required": false, "reason": "Validation is read-only" },
+			"contextLimit": { "maxFiles": 7, "maxTokens": 12000 },
+			"validations": ["registry", "scope", "schema", "tests", "visual"],
+			"domainContext": ["AGENTS.md", "docs/product-baseline/UI_ANALYSIS.md", "docs/product-baseline/DOMAIN_KNOWLEDGE.md"],
+			"playbook": [".github/prompts/analyze-rill.prompt.md"],
+			"applicableTests": ["tests/engineering-registry.test.js", "tests/architect.worker.test.js"]
+		}
+	]
+}
