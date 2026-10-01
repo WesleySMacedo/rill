@@ -1,0 +1,16 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 400 400" width="100%" height="100%">
+  <defs>
+    <mask id="rill-mask-perfect">
+      <rect width="400" height="400" fill="white" />
+      <path d="M 10,100 L 75,105 Q 50,210 80,320 L 68,322 Q 35,210 62,115 L 10,110 Z" fill="black" />
+      <path d="M 390,100 L 325,105 Q 350,210 320,320 L 332,322 Q 365,210 338,115 L 390,110 Z" fill="black" />
+      <g transform="translate(125, 215) rotate(-24) scale(1.25)">
+        <path d="M 0,-70 C 40,-70 50,20 35,60 C 20,90 -20,90 -35,60 C -50,20 -40,-70 0,-70 Z" fill="black" />
+      </g>
+      <g transform="translate(275, 215) rotate(24) scale(1.25)">
+        <path d="M 0,-70 C 40,-70 50,20 35,60 C 20,90 -20,90 -35,60 C -50,20 -40,-70 0,-70 Z" fill="black" />
+      </g>
+    </mask>
+  </defs>
+  <ellipse cx="200" cy="200" rx="188" ry="176" mask="url(#rill-mask-perfect)" fill="#FFFFFF" />
+</svg>
