@@ -1,0 +1,48 @@
+{
+	"name": "@rill/web",
+	"private": true,
+	"version": "0.1.0",
+	"type": "module",
+	"scripts": {
+		"dev": "concurrently -k -n web,worker -c cyan,green \"vite --host 0.0.0.0\" \"wrangler dev --port 8787\"",
+		"build": "npm run typecheck && vite build",
+		"preview": "vite preview --host 0.0.0.0",
+		"typecheck": "tsc --noEmit",
+		"worker:types": "wrangler types ./worker-configuration.d.ts",
+		"deploy": "npm run build && wrangler deploy"
+	},
+	"dependencies": {
+		"@langfuse/client": "^5.11.1",
+		"@langfuse/otel": "^5.11.1",
+		"@langfuse/tracing": "^5.11.1",
+		"@monaco-editor/react": "^4.7.0",
+		"@opentelemetry/api": "^1.9.1",
+		"@opentelemetry/context-async-hooks": "^2.11.0",
+		"@opentelemetry/sdk-trace-base": "^2.11.0",
+		"@radix-ui/react-dialog": "^1.1.23",
+		"@radix-ui/react-tooltip": "^1.2.16",
+		"@supabase/supabase-js": "^2.57.0",
+		"@tanstack/react-query": "^5.104.0",
+		"class-variance-authority": "^0.7.1",
+		"clsx": "^2.1.1",
+		"framer-motion": "^13.5.0",
+		"lucide-react": "^0.468.0",
+		"monaco-editor": "^0.57.0",
+		"react": "^19.1.1",
+		"react-dom": "^19.1.1",
+		"tailwind-merge": "^3.7.0",
+		"zustand": "^5.0.15"
+	},
+	"devDependencies": {
+		"@tailwindcss/vite": "^4.3.3",
+		"@types/node": "^26.6.4",
+		"@types/react": "^19.1.10",
+		"@types/react-dom": "^19.1.7",
+		"@vitejs/plugin-react": "^5.0.2",
+		"concurrently": "^10.0.5",
+		"tailwindcss": "^4.3.3",
+		"typescript": "^5.9.2",
+		"vite": "^7.1.5",
+		"wrangler": "^4.38.0"
+	}
+}

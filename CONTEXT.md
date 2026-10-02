@@ -1,4 +1,4 @@
-O objetivo principal do **Rill** é governar e controlar o uso de Inteligência Artificial no projeto M4QNA One.
+O objetivo principal do **Rill** é governar e controlar o uso de Inteligência Artificial
 
 Ele funciona como uma camada determinística entre o usuário, os clientes de IA e o código do sistema. O Rill decide, com base em regras verificáveis:
 

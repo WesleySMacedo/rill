@@ -1,0 +1,41 @@
+{
+	"$schema": "./node_modules/wrangler/config-schema.json",
+	"name": "rill-web",
+	"main": "./worker.ts",
+	"compatibility_date": "2026-10-01",
+	"compatibility_flags": ["nodejs_compat"],
+	"workers_dev": true,
+	"vars": {
+		"SUPABASE_URL": "https://srealfjufmvwhqyxouqs.supabase.co",
+		"SUPABASE_PUBLISHABLE_KEY": "sb_publishable_HvYi2ofS1X3RFFKRpRG9nA_1H2P9GBX",
+		"VITE_SUPABASE_PUBLISHABLE_KEY": "sb_publishable_HvYi2ofS1X3RFFKRpRG9nA_1H2P9GBX",
+		"RILL_APP_URL": "https://rill.wesleysmacedo.com",
+		"LANGFUSE_BASE_URL": "https://us.cloud.langfuse.com",
+		"LANGFUSE_PUBLIC_KEY": "pk-lf-9549cc4c-761e-404a-91b2-56ded33a7558",
+		"LANGFUSE_TRACING_ENVIRONMENT": "production",
+		"LANGFUSE_PROMPT_NAME": "rill-mission-intelligence",
+		"LANGFUSE_PROMPT_LABEL": "production",
+		"OPENROUTER_LOW_COST_MODEL": "qwen/qwen3.8-flash",
+		"RILL_AGENT_DOWNLOAD_URL": "https://github.com/WesleySMacedo/rill/releases/latest/download/Rill-Agent-Setup.exe"
+	},
+	"secrets": {
+		"required": ["SUPABASE_SERVICE_ROLE_KEY", "OPENROUTER_API_KEY", "LANGFUSE_SECRET_KEY"]
+	},
+	"assets": {
+		"directory": "./dist/",
+		"binding": "ASSETS",
+		"not_found_handling": "single-page-application",
+		"run_worker_first": ["/health", "/api/*"]
+	},
+	"routes": [
+		{
+			"pattern": "rill.wesleysmacedo.com",
+			"zone_name": "wesleysmacedo.com",
+			"custom_domain": true
+		}
+	],
+	"observability": {
+		"enabled": true,
+		"head_sampling_rate": 1
+	}
+}

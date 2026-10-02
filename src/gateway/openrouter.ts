@@ -52,8 +52,9 @@ export async function callOpenRouter(
 			},
 			body: JSON.stringify({
 				model: config.model,
-				messages: [{ role: "user", content: JSON.stringify(input.input) }],
+				messages: input.messages?.length ? input.messages.map(({ role, content }) => ({ role, content })) : [{ role: "user", content: JSON.stringify(input.input) }],
 				max_tokens: input.outputTokenLimit,
+				...(input.reasoning ? { reasoning: input.reasoning } : {}),
 				...(input.structuredOutput ? { provider: { require_parameters: true } } : {}),
 				...(input.structuredOutput && config.structuredOutput ? {
 					response_format: {

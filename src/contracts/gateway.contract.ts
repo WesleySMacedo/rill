@@ -1,5 +1,16 @@
 export type ModelProfile = "LOW_COST" | "STANDARD" | "HIGH_CONFIDENCE";
 
+export interface GatewayChatMessage {
+	role: "system" | "user" | "assistant";
+	content: string;
+}
+
+export interface GatewayReasoningOptions {
+	enabled?: boolean;
+	effort?: "low" | "medium" | "high";
+	exclude?: boolean;
+}
+
 export interface SanitizedGatewayInput {
 	executionId: string;
 	action: string;
@@ -16,6 +27,9 @@ export interface SanitizedGatewayInput {
 	retryEstimatedCost?: number;
 	fallbackEstimatedCost?: number;
 	structuredOutput?: { name: string; schema: Record<string, unknown> };
+	/** Pre-compiled chat messages (e.g. from a managed prompt). When absent, `input` is sent as a single user message. */
+	messages?: GatewayChatMessage[];
+	reasoning?: GatewayReasoningOptions;
 }
 
 export interface GatewayModelConfig {

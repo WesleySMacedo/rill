@@ -1,4 +1,5 @@
 import { runAgentLoop } from "./agent-loop";
+import { classifyRillTask } from "../classification/rill-classifier";
 import type { LangfuseRuntimeEnv } from "./agent-loop-telemetry";
 import type { RillExecutionState } from "../contracts/rill-execution.contract";
 import type { EngineeringAction, EngineeringRegistry } from "../routing/engineering-registry-resolver";
@@ -25,22 +26,6 @@ export interface RillExecutionResponse extends RillRequestResponse {
 	sessionId: string | null;
 }
 
-function classifyTask(task: string): Pick<RillRequestResponse, "action" | "domain" | "specialist" | "reason"> {
-	if (!/audit\s*q|auditq/i.test(task)) {
-		return { action: null, domain: null, specialist: null, reason: "UNKNOWN_DOMAIN" };
-	}
-	if (/implemente|corrija|altere|modifique|crie|patch/i.test(task)) {
-		return { action: "PATCH_UI", domain: "AuditQ", specialist: "Builder", reason: "REGISTRY_CANDIDATE" };
-	}
-	if (/valid[ae]|verifique os testes/i.test(task)) {
-		return { action: "VALIDATE_CHANGE", domain: "AuditQ", specialist: "Reviewer", reason: "REGISTRY_CANDIDATE" };
-	}
-	if (/analise|analyz|verifique|revise|plan/i.test(task)) {
-		return { action: "PLAN_CHANGE", domain: "AuditQ", specialist: "Planner", reason: "REGISTRY_CANDIDATE" };
-	}
-	return { action: null, domain: "AuditQ", specialist: null, reason: "UNKNOWN_ACTION" };
-}
-
 export function createRillRequest(
 	request: RillRequest,
 	dependencies: { registry: EngineeringRegistry; fileSystem: ContextFileSystem },
@@ -50,7 +35,7 @@ export function createRillRequest(
 		return { executionId, status: "BLOCKED", action: null, domain: null, specialist: null, reason: "INVALID_REQUEST" };
 	}
 
-	const classification = classifyTask(request.task);
+	const classification = classifyRillTask(request.task);
 	if (!classification.action || !classification.domain || !classification.specialist) {
 		return { executionId, status: "BLOCKED", ...classification };
 	}

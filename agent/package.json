@@ -1,0 +1,34 @@
+{
+	"name": "@rill/agent",
+	"productName": "Rill Agent",
+	"private": true,
+	"version": "0.1.0",
+	"description": "Local execution runtime for the Rill web platform.",
+	"author": "Rill",
+	"license": "MIT",
+	"main": "dist/electron/main.js",
+	"scripts": {
+		"build": "tsc -p tsconfig.json",
+		"typecheck": "tsc -p tsconfig.json --noEmit",
+		"icons": "node scripts/generate-icons.mjs",
+		"start": "npm run build && electron .",
+		"test": "vitest run",
+		"dist": "npm run build && electron-builder --win --x64 --publish never",
+    "dist:nsis": "npm run build && electron-builder --win nsis --x64 --publish never",
+    "dist:portable": "npm run build && electron-builder --win portable --x64 --publish never"
+	},
+	"dependencies": {
+		"express": "^5.2.1",
+		"ws": "^8.22.0"
+	},
+	"devDependencies": {
+		"@resvg/resvg-js": "^2.6.2",
+		"@types/express": "^5.0.6",
+		"@types/node": "^24.0.0",
+		"@types/ws": "^8.18.2",
+		"electron": "^44.5.1",
+		"electron-builder": "^26.15.3",
+		"typescript": "^5.9.2",
+		"vitest": "^4.1.11"
+	}
+}

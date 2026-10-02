@@ -1,4 +1,4 @@
-import type { ModelProfile, SanitizedGatewayInput } from "../contracts/gateway.contract";
+import type { GatewayChatMessage, GatewayReasoningOptions, ModelProfile, SanitizedGatewayInput } from "../contracts/gateway.contract";
 
 const forbiddenPatterns = [
 	/\b\d{3}\.\d{3}\.\d{3}-\d{2}\b/,
@@ -9,7 +9,7 @@ const forbiddenPatterns = [
 	/(?:api[_-]?key|secret|password|access[_-]?token)\s*[:=]/i,
 ];
 
-function assertSafe(value: unknown): void {
+export function assertSafe(value: unknown): void {
 	if (typeof value === "string" && forbiddenPatterns.some((pattern) => pattern.test(value))) throw new Error("SECURITY_REJECTION");
 	if (Array.isArray(value)) {
 		for (const item of value) assertSafe(item);
@@ -32,10 +32,20 @@ export interface GatewayInputRequest {
 	estimatedCost: number | null;
 	maxEstimatedCost?: number;
 	structuredOutput?: { name: string; schema: Record<string, unknown> };
+	messages?: GatewayChatMessage[];
+	reasoning?: GatewayReasoningOptions;
 }
+
+const messageRoles = new Set(["system", "user", "assistant"]);
 
 export function sanitizeGatewayInput(input: GatewayInputRequest): SanitizedGatewayInput {
 	assertSafe(input.input);
+	if (input.messages !== undefined) {
+		if (!Array.isArray(input.messages) || input.messages.length === 0 || input.messages.some((message) => !message || !messageRoles.has(message.role) || typeof message.content !== "string" || !message.content.trim())) {
+			throw new Error("SECURITY_REJECTION");
+		}
+		assertSafe(input.messages.map((message) => message.content));
+	}
 	return {
 		...input,
 		sanitized: true,

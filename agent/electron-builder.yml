@@ -1,0 +1,35 @@
+# Private beta: builds are intentionally UNSIGNED. No CSC_LINK, CSC_KEY_PASSWORD
+# or Azure Trusted Signing is required. Windows SmartScreen will show
+# "Unknown publisher" when the installer is run; testers choose "More info → Run anyway".
+# Re-enable signing (and forceCodeSigning: true) before any public release.
+appId: com.wesleysmacedo.rill.agent
+productName: Rill Agent
+copyright: Copyright © Rill
+forceCodeSigning: false
+directories:
+  output: release
+  buildResources: assets
+files:
+  - dist/**/*
+  - assets/**/*
+  - package.json
+asar: true
+win:
+  target:
+    - target: nsis
+      arch: [x64]
+    - target: portable
+      arch: [x64]
+  icon: assets/icon.png
+  # Keeps the Rill icon and version resources embedded in the exe; no certificate is used.
+  signAndEditExecutable: true
+  verifyUpdateCodeSignature: false
+nsis:
+  artifactName: Rill-Agent-Setup.${ext}
+  oneClick: true
+  perMachine: false
+  runAfterFinish: true
+  deleteAppDataOnUninstall: false
+  shortcutName: Rill Agent
+portable:
+  artifactName: Rill-Agent-Portable.${ext}
